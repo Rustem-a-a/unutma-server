@@ -3,26 +3,29 @@ import cors from 'cors'
 import 'dotenv/config'
 import mongoose from "mongoose";
 import cookieParser from 'cookie-parser'
+import authRouter from "./src/router/authRouter.js";
+import errorMiddleware from "./src/middlewares/ErrorMiddleware.js";
 
 const PORT = process.env.PORT || 4000;
-const app= express();
+const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors(
     {
-        credentials:true,
+        credentials: true,
         origin: process.env.CLIENT_URL
     }
 ));
-const start = async ()=>{
-    try{
+app.use('/auth', authRouter)
+app.use(errorMiddleware);
+const start = async () => {
+    try {
         await mongoose.connect(process.env.MONGODB_URL);
-        app.listen(PORT,()=> {
+        app.listen(PORT, () => {
             console.log('Server is running in port ' + PORT);
         })
-    }
-    catch (e){
+    } catch (e) {
         console.log(e);
     }
 }
