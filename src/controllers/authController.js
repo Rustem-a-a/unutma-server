@@ -11,10 +11,9 @@ class AuthControllers {
         }
         try {
             const {username, email, password} = req.body;
-            console.log(req.body)
             const userData = await UserService.registration({username, email, password});
             if (userData === 550) {
-                return next(ApiError.BadRequest('Mail is not send'));
+                return next(ApiError.BadRequest('Mail is not send. Check the email is correct.'));
             }
             res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true});
             return res.status(200).json({...userData});

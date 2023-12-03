@@ -4,6 +4,7 @@ import 'dotenv/config'
 import mongoose from "mongoose";
 import cookieParser from 'cookie-parser'
 import authRouter from "./src/router/authRouter.js";
+import noteRouter from "./src/router/noteRouter.js";
 import errorMiddleware from "./src/middlewares/ErrorMiddleware.js";
 
 const PORT = process.env.PORT || 4000;
@@ -18,6 +19,7 @@ app.use(cors(
     }
 ));
 app.use('/auth', authRouter)
+app.use('/', noteRouter)
 app.use(errorMiddleware);
 const start = async () => {
     try {
