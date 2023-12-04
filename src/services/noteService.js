@@ -2,9 +2,10 @@ import Note from "../models/noteModel.js";
 
 class NoteService {
     async createNote({title, author}) {
-        await Note.create({title, author})
+        const note = await Note.create({title, author})
         return note
     }
+
     async createItem({noteId, itemTitle}) {
         const note = await Note.findOneAndUpdate(
             {_id: noteId},
@@ -12,6 +13,7 @@ class NoteService {
             {new: true})
         return note
     }
+
     async updateItem({noteId, newItems}) {
         const note = await Note.findOneAndUpdate(
             {_id: noteId},
@@ -19,6 +21,7 @@ class NoteService {
             {new: true})
         return note
     }
+
     async deleteItem({noteId, itemId}) {
         const note = await Note.findOneAndUpdate(
             {_id: noteId},
@@ -26,6 +29,14 @@ class NoteService {
             {new: true})
         return note
     }
+
+    async deleteNote(noteId) {
+        const note = await Note.deleteOne(
+            {_id: noteId})
+        console.log(note)
+        return note
+    }
+
     async getNote(userId) {
         const note = await Note.find({author: userId})
         return note
