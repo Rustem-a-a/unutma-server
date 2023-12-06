@@ -25,7 +25,7 @@ class TokenService {
         return removedToken;
     }
 
-     validateAccessToken(accessToken) {
+    validateAccessToken(accessToken) {
         try {
             const userData = jwt.verify(accessToken, process.env.ACCESS_SECRET);
             return userData;

@@ -16,18 +16,19 @@ const UserSchema = new mongoose.Schema({
         required: true
     },
     isActivated: {
-        type:Boolean,
+        type: Boolean,
         default: false
     },
-    activationLink:{
-        type:String
+    activationLink: {
+        type: String
     },
     notes: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref:'Note'
+            ref: 'Note'
         }
-    ]})
+    ]
+})
 
-const User =  mongoose.model('User', UserSchema);
+const User = mongoose.model('User', UserSchema);
 export default User;

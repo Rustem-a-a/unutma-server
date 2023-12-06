@@ -15,11 +15,11 @@ class UserService {
         }
         const hashPassword = await bcrypt.hash(password, 7);
         const activationLink = await v4();
-        const mailResponse = await MailService.sendActivationMail(email, `${process.env.SERVER_URL}/auth/activate/${activationLink}`);
+        const mailResponse = await MailService.sendActivationMail(email,username,password,`${process.env.SERVER_URL}/auth/activate/${activationLink}`);
         if (mailResponse === 550) {
             return 550
         }
-        const user = await User.create({username, email, password: hashPassword, activationLink});
+        const user = await User.create({username, email, password: hashPassword, activationLink:username});
         const userDto = new UserDto(user);
         const tokens = TokenService.generateToken({...userDto});
         await TokenService.saveToken(userDto.id, tokens.refreshToken);
@@ -69,11 +69,6 @@ class UserService {
         const tokens = TokenService.generateToken({...userDto});
         await TokenService.saveToken(userDto.id, tokens.refreshToken);
         return {...tokens, user: userDto}
-    }
-
-    async getAllUsers() {
-        const users = await User.find();
-        return users;
     }
 }
 

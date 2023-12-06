@@ -2,7 +2,7 @@ import Note from "../models/noteModel.js";
 
 class NoteService {
     async createNote({title, author}) {
-        const note = await Note.create({title, author})
+        const note = await Note.create({title, author});
         return note
     }
 
@@ -33,7 +33,6 @@ class NoteService {
     async deleteNote(noteId) {
         const note = await Note.deleteOne(
             {_id: noteId})
-        console.log(note)
         return note
     }
 
