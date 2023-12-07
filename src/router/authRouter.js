@@ -8,7 +8,7 @@ import authMiddleware from "../middlewares/authMiddleware.js";
 const router = new Router()
 
 router.post('/registration',
-    body('username').isLength({min: 5, max: 20}),
+    body('username').isLength({min: 3, max: 20}),
     body('email').isEmail(),
     body('password').isLength({min: 5, max: 20}),
     authController.registration)
